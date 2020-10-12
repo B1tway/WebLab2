@@ -9,8 +9,8 @@
 // });
 $('#btn').click(function () {
     $.get('controllerServlet', $('#form').serialize(), function (responseXml) {
-
+            draw_current();
             $("#table_block").html($(responseXml).find("data").html());
-        },
+        }
     );
 });

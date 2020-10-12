@@ -1,18 +1,5 @@
-function draw_arrows(context, fromx, fromy, tox, toy) {
-    var headlen = 10; // length of head in pixels
-    var dx = tox - fromx;
-    var dy = toy - fromy;
-    var angle = Math.atan2(dy, dx);
 
-    context.beginPath();
-    context.lineWidth = 1.5;
-    context.moveTo(fromx, fromy);
-    context.lineTo(tox, toy);
-    context.lineTo(tox - headlen * Math.cos(angle - Math.PI / 6), toy - headlen * Math.sin(angle - Math.PI / 6));
-    context.moveTo(tox, toy);
-    context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
-    context.stroke();
-}
+
 function canvas_arrow(context, fromx, fromy, tox, toy) {
     var headlen = 10; // length of head in pixels
     var dx = tox - fromx;
@@ -28,6 +15,7 @@ function canvas_arrow(context, fromx, fromy, tox, toy) {
     context.lineTo(tox - headlen * Math.cos(angle + Math.PI / 6), toy - headlen * Math.sin(angle + Math.PI / 6));
     context.stroke();
 }
+
 function draw_coordinates(ctx) {
     let R = ctx.canvas.height / 4
     let R_text;
@@ -142,7 +130,7 @@ function drawPoint(x, y) {
     let R = context.canvas.height / 4 / $("select")[0].value;
     let xx = context.canvas.width / 2 + R * x;
     let yy = context.canvas.height / 2 - R * y;
-    console.log("x: " + xx + " y: " + yy);
+    console.log("xx: " + xx + " yy: " + yy);
     context.beginPath();
     context.moveTo(context.canvas.width / 2 + R * x, context.canvas.height / 2 - R * y);
     context.arc(context.canvas.width / 2 + R * x, context.canvas.height / 2 - R * y, context.canvas.width / 300, 0, 2 * Math.PI);
@@ -168,9 +156,9 @@ function getCursorPosition(canvas, event) {
 
     console.log("x: " + x + " y: " + y);
     console.log("w: " + rect.left);
-    console.log("c: " + (window.innerWidth - canvas.width)/2);
+    console.log("c: " + (window.innerWidth - canvas.width) / 2);
     context.moveTo(x, y);
-    context.arc(x, y, 1,0, 2 * Math.PI);
+    context.arc(x, y, 1, 0, 2 * Math.PI);
     context.closePath();
 
     // let r = canvas.height / 4 / $("select")[0].value;
@@ -190,12 +178,26 @@ $('#canvas').click(function (event) {
     const ctx = $("#canvas")[0].getContext('2d');
     try {
         let r_val = getR();
-        let kR = r_val / (ctx.canvas.height / 4);
-        const x = event.offsetX,
-            y = event.offsetY;
-        const rly_x = (x - ctx.canvas.width / 2) * kR;
-        const rly_y = (ctx.canvas.height / 2 - y) * kR;
-        console.log("x: " + (rly_x) + " y: " + (rly_y));
+        let kR = (ctx.canvas.height / (4 * r_val));
+        const rect = ctx.canvas.getBoundingClientRect();
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+
+        let canvas_x = x / (2.16666666667);
+        let canvas_y = y / (325/300)/ 2;
+        console.log("cx " + canvas_x + " cy " + canvas_y);
+        // context.moveTo(context.canvas.width / 2 + R * x, context.canvas.height / 2 - R * y);
+        const real_x = (canvas_x - ctx.canvas.width / 2) / kR;
+        const real_y = (ctx.canvas.height / 2 - canvas_y) / kR;
+        console.log("x " + real_x + " y " + real_y);
+        drawPoint(real_x,real_y);
+        $('#inv_x').val(real_x);
+        $('#inv_y').val(real_y);
+        $('#inv_r').val(r_val);
+        $.get('controllerServlet', $('#inv').serialize(), function (responseXml) {
+                $("#table_block").html($(responseXml).find("data").html());
+            }
+        );
     } catch (e) {
         alert("Невозможно определить координаты точки")
     }

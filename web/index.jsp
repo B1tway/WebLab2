@@ -94,6 +94,11 @@
 
 
     </form>
+    <form id="inv" method="post">
+      <input id="inv_x" type="hidden" name="x">
+      <input id="inv_y" type="hidden" name="y">
+      <input id="inv_r"type="hidden" name="r">
+    </form>
     <div id="table_block">
       <jsp:include page="answer.jsp"/>
     </div>

@@ -20,7 +20,7 @@ public class QueryEntity {
         result = false;
         if (X >= 0 && Y <= 0 && X <= R && Y <= R) result = true;
         if (X <= 0 && Y >= 0 && ((X * X + Y * Y) <= (R * R))) result = true;
-        if (X <= 0 && Y <= 0 && (-X - R >= Y)) result = true;
+        if (X < 0 && Y < 0 && (-X - R <= Y) && X >= -R && Y >= -R) result = true;
     }
 
     public void setX(Double x) {
