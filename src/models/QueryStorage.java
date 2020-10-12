@@ -15,7 +15,7 @@ public class QueryStorage {
     public QueryStorage() {
         storage = new ArrayList<>();
     }
-    public int getSize() {
+    public int getSizer() {
         return storage.size();
     }
 }

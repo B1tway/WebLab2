@@ -15,7 +15,15 @@ function validateX() {
     }
     return val >= -3 && val <= 5;
 }
-
+function validateR() {
+    let inp = getR();
+    console.log(inp);
+    let val = parseFloat(inp);
+    if(isNaN(inp)) {
+        return false;
+    }
+    return val >= 1 && val <= 5;
+}
 
 function validate() {
     $("#btn")[0].disabled = !(validateY($('#y')[0]) && validateX());
