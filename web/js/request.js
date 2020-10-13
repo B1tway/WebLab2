@@ -15,6 +15,7 @@ $('#btn').click(function () {
             if (x >= -3 && x <= 5 && y >= -3 && y <= 3 && r >= 1 && r<= 5) {
                 draw_current();
                 $("#table_block").html($(responseXml).find("data").html());
+                console.log('debug');
             } else {
                 alert("Incorrect values")
             }
