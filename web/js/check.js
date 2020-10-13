@@ -4,7 +4,7 @@ function validateY(inp) {
     if (isNaN(val)){
         return false
     }
-    return val <= 3 && val >= -3
+    return val < 3 && val > -3
 }
 function validateX() {
     let inp = $('input:checked').prop('value');

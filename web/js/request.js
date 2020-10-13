@@ -12,7 +12,7 @@ $('#btn').click(function () {
             let x = getX();
             let y = getY();
             let r = getR();
-            if (x >= -3 && x <= 5 && y >= -3 && y <= 3 && r >= 1 && r<= 5) {
+            if (x >= -3 && x <= 5 && y > -3 && y < 3 && r >= 1 && r<= 5) {
                 draw_current();
                 $("#table_block").html($(responseXml).find("data").html());
                 console.log('debug');
