@@ -19,9 +19,12 @@ public class ControllerServlet extends HttpServlet {
             System.out.println(req.getParameter("x"));
             System.out.println(req.getParameter("y"));
             System.out.println(req.getParameter("r"));
-            Double.parseDouble(req.getParameter("x"));
-            Double.parseDouble(req.getParameter("y"));
-            Double.parseDouble(req.getParameter("r"));
+            double x = Double.parseDouble(req.getParameter("x"));
+            double y =Double.parseDouble(req.getParameter("y"));
+            double r = Double.parseDouble(req.getParameter("r"));
+            if(x >= -3 && x <= 5 && y > -3 && y < 3 && r >= 1 && r <= 5) {
+                getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+            }
             getServletContext().getRequestDispatcher("/areaCheckServlet").forward(req, resp);
         } catch (NumberFormatException | NullPointerException exception ){
             System.out.println("???");
